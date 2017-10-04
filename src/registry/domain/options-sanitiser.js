@@ -81,6 +81,9 @@ module.exports = function(input) {
     case 's3':
       options.storage.adapter = require('./s3');
       break;
+    case 'gs':
+      options.storage.adapter = require('./gs');
+      break;
     default:
       options.storage.adapter = require('./s3');
     }

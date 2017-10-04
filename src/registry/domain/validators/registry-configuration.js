@@ -123,6 +123,16 @@ module.exports = function(conf) {
         );
       }
     }
+    if (conf.storage.adapterType === 'gs') {
+      if (!conf.storage.options.bucket || !conf.storage.options.projectId) {
+        return returnError(
+          format(
+            strings.errors.registry.CONFIGURATION_STORAGE_NOT_VALID,
+            conf.storage.adapterType.toUpperCase()
+          )
+        );
+      }
+    }
   }
 
   if (conf.customHeadersToSkipOnWeakVersion) {
