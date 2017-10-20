@@ -1,5 +1,38 @@
 ## Change Log
 
+### v0.41.12
+- [#708](https://github.com/opentable/oc/pull/708) Update oc-client to the latest version 🚀
+- [#707](https://github.com/opentable/oc/pull/707) Update oc-client-browser to the latest version 🚀
+- [#706](https://github.com/opentable/oc/pull/706) Update oc-client-browser to the latest version 🚀
+- [#705](https://github.com/opentable/oc/pull/705) [DX-202] Changelog fix
+- [#704](https://github.com/opentable/oc/pull/704) [DX-202] Execute all the tests
+- [#659](https://github.com/opentable/oc/pull/659) Issue #464: Replaces Grunt with NPM scripts
+
+### v0.41.11
+- [#703](https://github.com/opentable/oc/pull/703) Infinite npm i loop fix
+- [#702](https://github.com/opentable/oc/pull/702) Update dependency-graph to the latest version 🚀
+- [#701](https://github.com/opentable/oc/pull/701) Update aws-sdk to the latest version 🚀
+
+### v0.41.10
+- [#700](https://github.com/opentable/oc/pull/700) Error publish
+- [#699](https://github.com/opentable/oc/pull/699) Meaningful error shown when publish fails due to a generic API error
+- [#695](https://github.com/opentable/oc/pull/695) Update aws-sdk to the latest version 🚀
+- [#688](https://github.com/opentable/oc/pull/688) Decouple s3
+
+### v0.41.9
+- [#693](https://github.com/opentable/oc/pull/693) [DX-198] Watch .github.io folders
+- [#694](https://github.com/opentable/oc/pull/694) Npm install for new module bugfix
+
+### v0.41.8
+- [#692](https://github.com/opentable/oc/pull/692) [DX-197] Watcher bugfix
+- [#690](https://github.com/opentable/oc/pull/690) Update aws-sdk to the latest version 🚀
+- [#689](https://github.com/opentable/oc/pull/689) ignoring lock files
+- [#687](https://github.com/opentable/oc/pull/687) Update aws-sdk to the latest version 🚀
+- [#686](https://github.com/opentable/oc/pull/686) [DX-185] Removed NPM as dependency
+- [#685](https://github.com/opentable/oc/pull/685) Update oc-client to the latest version 🚀
+- [#681](https://github.com/opentable/oc/pull/681) [DX-185] Refactoring
+- [#684](https://github.com/opentable/oc/pull/684) Update mocha to the latest version 🚀
+
 ### v0.41.7
 - [#679](https://github.com/opentable/oc/pull/679) [Snyk Update] New fixes for 2 vulnerable dependency paths
 - [#678](https://github.com/opentable/oc/pull/678) Update aws-sdk to the latest version 🚀
@@ -60,7 +93,7 @@
 - [#624](https://github.com/opentable/oc/pull/624) inititalzie the dev registry with the dynamic require templatee
 
 ### v0.41.1
-- [#619](https://github.com/opentable/oc/pull/619) Issue #618 : Accessing s3 bucket over a proxy
+- [#619](https://github.com/opentable/oc/pull/619) Issue #618 : Accessing s3 bucket over a proxy from oc-registry
 - [#621](https://github.com/opentable/oc/pull/621) Update aws-sdk to the latest version 🚀
 - [#620](https://github.com/opentable/oc/pull/620) Update dependencies to enable Greenkeeper 🌴
 
@@ -155,7 +188,7 @@
 - [#554](https://github.com/opentable/oc/pull/554) Update aws-sdk to the latest version 🚀
 
 ### v0.39.2
-- [#552](https://github.com/opentable/oc/pull/552) remove .Only
+- [#552](https://github.com/opentable/oc/pull/552) remove .Only from tests
 - [#550](https://github.com/opentable/oc/pull/550) Update uglify-js to the latest version 🚀
 - [#551](https://github.com/opentable/oc/pull/551) Update lint-staged to the latest version 🚀
 - [#549](https://github.com/opentable/oc/pull/549) Update webpack to the latest version 🚀
@@ -202,8 +235,8 @@
 
 ### v0.37.11
 - [#488](https://github.com/opentable/oc/pull/488) yarn-support
-    
-    closes #487
+
+closes #487
 
 ### v0.37.10
 - [#516](https://github.com/opentable/oc/pull/516) Improve AWS upload mechanism and allow to override registry timeout settings
@@ -606,8 +639,7 @@
 
 ### v0.28.9
 - [#214](https://github.com/opentable/oc/pull/214) S3 validation
-- [#216](https://github.com/opentable/oc/pull/216) Looks good;
-    tested
+- [#216](https://github.com/opentable/oc/pull/216) Looks good
 
 ### v0.28.8
 - [#215](https://github.com/opentable/oc/pull/215) mock bugfix for when a value is not a string
@@ -638,7 +670,7 @@
 - [#200](https://github.com/opentable/oc/pull/200) Have optional callbacks in CLI functions
 
 ### v0.28.0
-- [#198](https://github.com/opentable/oc/pull/198) More details on errors
+- [#198](https://github.com/opentable/oc/pull/198) More details on errors from node client
 - [#197](https://github.com/opentable/oc/pull/197) Return null when there's no error in renderComponents
 
 ### v0.27.9
@@ -670,7 +702,7 @@
 - [#182](https://github.com/opentable/oc/pull/182) Node.js client post and various improvements
 
 ### v0.26.1
-- [#184](https://github.com/opentable/oc/pull/184) Allow oc dev to be hosted
+- [#184](https://github.com/opentable/oc/pull/184) Allow oc dev to be hosted from a custom base url
 
 ### v0.26.0
 - [#178](https://github.com/opentable/oc/pull/178) node.js client should accept serverRendering and clientRendering endpoints instead of generic array (breaking change)
@@ -798,7 +830,7 @@
 - [#77](https://github.com/opentable/oc/pull/77) allow jade to render partials
 - [#76](https://github.com/opentable/oc/pull/76) Sauce labs stabilization
 - [#75](https://github.com/opentable/oc/pull/75) Autocomplete experiment
-- [#74](https://github.com/opentable/oc/pull/74) specify registry
+- [#74](https://github.com/opentable/oc/pull/74) specify registry from terminal
 - [#67](https://github.com/opentable/oc/pull/67) Refactoring, cleanup
 - [#66](https://github.com/opentable/oc/pull/66) README update
 - [#65](https://github.com/opentable/oc/pull/65) server.js' req -> context

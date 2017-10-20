@@ -1,14 +1,23 @@
 {
   "name": "oc",
-  "version": "0.41.7",
+  "version": "0.41.12",
   "description": "A framework for developing and distributing html components",
   "main": "./src/index.js",
   "bin": {
     "oc": "./src/oc-cli.js"
   },
   "scripts": {
+    "build": "node tasks/build.js",
+    "git-stage": "node tasks/git-stage.js",
+    "major": "npm run version-major && npm run test-silent && npm run git-stage",
+    "minor": "npm run version-minor && npm run test-silent && npm run git-stage",
+    "patch": "npm run version-patch && npm run test-silent && npm run git-stage",
     "precommit": "lint-staged",
-    "test": "grunt build && grunt test"
+    "test": "npm run build && node tasks/mochaTest.js",
+    "test-silent": "npm run build && node tasks/mochaTest.js --silent",
+    "version-major": "node tasks/version.js --type=\"major\"",
+    "version-minor": "node tasks/version.js --type=\"minor\"",
+    "version-patch": "node tasks/version.js --type=\"patch\""
   },
   "lint-staged": {
     "*.js": [
@@ -36,28 +45,29 @@
   ],
   "devDependencies": {
     "chai": "3.5.0",
-    "grunt": "^1.0.1",
-    "grunt-git": "^1.0.0",
-    "grunt-mocha-test": "^0.13.2",
+    "chalk": "^2.1.0",
+    "glob": "^7.1.2",
     "husky": "^0.14.3",
     "injectr": "0.5.1",
     "lint-staged": "^4.2.3",
-    "load-grunt-tasks": "^3.5.2",
+    "minimist": "^1.2.0",
     "mocha": "^4.0.0",
+    "node-emoji": "^1.8.1",
     "prettier-eslint-cli": "^4.0.4",
     "semver-sort": "0.0.4",
+    "simple-git": "^1.77.0",
     "sinon": "^4.0.0"
   },
   "dependencies": {
     "accept-language-parser": "1.4.1",
     "async": "1.5.2",
-    "aws-sdk": "2.126.0",
+    "aws-sdk": "2.136.0",
     "basic-auth-connect": "^1.0.0",
     "body-parser": "1.18.2",
     "builtin-modules": "^1.1.1",
     "colors": "1.1.2",
     "cross-spawn": "^5.1.0",
-    "dependency-graph": "0.5.0",
+    "dependency-graph": "0.5.1",
     "errorhandler": "^1.5.0",
     "express": "4.16.0",
     "form-data": "2.1.4",
@@ -72,8 +82,8 @@
     "multer": "^1.3.0",
     "nice-cache": "0.0.5",
     "node-dir": "0.1.17",
-    "oc-client": "2.1.31",
-    "oc-client-browser": "1.0.4",
+    "oc-client": "2.1.32",
+    "oc-client-browser": "1.1.1",
     "oc-get-unix-utc-timestamp": "1.0.1",
     "oc-template-handlebars": "6.0.7",
     "oc-template-handlebars-compiler": "6.1.3",
