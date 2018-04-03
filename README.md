@@ -1,4 +1,4 @@
-![oc](https://raw.githubusercontent.com/opentable/oc/master/logo-type.png)
+![oc](https://raw.githubusercontent.com/opencomponents/oc/master/logo-type.png)
 =============
 
 OpenComponents, **serverless in the front-end world**.
@@ -17,15 +17,16 @@ We have been using it for more than two years in production at OpenTable, for sh
 
 [![npm version](https://img.shields.io/npm/v/oc.svg)](https://npmjs.org/package/oc)
 [![node version](https://img.shields.io/node/v/oc.svg)](https://npmjs.org/package/oc)
-[![Dependency Status](https://david-dm.org/opentable/oc.svg)](https://david-dm.org/opentable/oc)
-[![Known Vulnerabilities](https://snyk.io/test/github/opentable/oc/badge.svg)](https://snyk.io/test/github/opentable/oc)
+[![Dependency Status](https://david-dm.org/opencomponents/oc.svg)](https://david-dm.org/opencomponents/oc)
+[![Known Vulnerabilities](https://snyk.io/test/github/opencomponents/oc/badge.svg)](https://snyk.io/test/github/opencomponents/oc)
 [![downloads](https://img.shields.io/npm/dm/oc.svg?label=downloads+from+npm)](https://npmjs.org/package/oc)
 [![Join the chat at https://gitter.im/opentable/oc](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/opentable/oc?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Greenkeeper badge](https://badges.greenkeeper.io/opentable/oc.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/opencomponents/oc.svg)](https://greenkeeper.io/) 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopencomponents%2Foc.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopencomponents%2Foc?ref=badge_shield)
 
 ## Links
 
-- [Documentation](https://github.com/opentable/oc/wiki)
+- [Documentation](https://github.com/opencomponents/oc/wiki)
 - [Requirements and build status](#requirements-and-build-status)
 - [Changelog](CHANGELOG.md)
 - [Awesome resources about OC](https://github.com/matteofigus/awesome-oc)
@@ -39,9 +40,22 @@ We have been using it for more than two years in production at OpenTable, for sh
 
 Disclaimer: This project is still under heavy development and the API is likely to change at any time. In case you would find any issues, check the [troubleshooting page](CONTRIBUTING.md#troubleshooting).
 
-[![linux build](https://img.shields.io/travis/opentable/oc/master.svg?label=linux+build)](http://travis-ci.org/opentable/oc)
+[![linux build](https://img.shields.io/travis/opencomponents/oc/master.svg?label=linux+build)](http://travis-ci.org/opencomponents/oc)
+
+| Node6             | Node7             | Node8            | 
+|-------------------|-------------------|-------------------|
+| [![Node6][1]][4] | [![Node7][2]][4] | [![Node8][3]][4] |
+
+[1]: https://travis-matrix-badges.herokuapp.com/repos/opencomponents/oc/branches/master/1
+[2]: https://travis-matrix-badges.herokuapp.com/repos/opencomponents/oc/branches/master/2
+[3]: https://travis-matrix-badges.herokuapp.com/repos/opencomponents/oc/branches/master/3
+[4]: https://travis-ci.org/opencomponents/oc
+
+
 [![windows build](https://img.shields.io/appveyor/ci/matteofigus/oc/master.svg?label=windows+build)](https://ci.appveyor.com/project/matteofigus/oc)
 
 ## License
 
 MIT
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopencomponents%2Foc.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopencomponents%2Foc?ref=badge_large)

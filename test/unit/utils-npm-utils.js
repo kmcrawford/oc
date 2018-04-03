@@ -13,6 +13,54 @@ describe('utils : npm-utils', () => {
   });
 
   const installPath = 'path/to/component';
+  const initPath = installPath;
+
+  describe('init()', () => {
+    const scenarios = [
+      {
+        input: { initPath },
+        output: ['init', '--yes', '--no-package-lock'],
+        cmdCall: { cwd: initPath, stdio: 'inherit' }
+      },
+      {
+        input: { initPath, silent: true },
+        output: ['init', '--yes', '--no-package-lock'],
+        cmdCall: { cwd: initPath, stdio: 'ignore' }
+      }
+    ];
+
+    scenarios.forEach(scenario => {
+      const { initPath, silent } = scenario.input;
+      describe(`when invoked for ${initPath} with silent=${silent}`, () => {
+        let error, onStub;
+        beforeEach(done => {
+          onStub = sinon.stub();
+          crossSpawnStub.reset();
+          crossSpawnStub.returns({ on: onStub });
+          npmUtils.init(scenario.input, (err, res) => {
+            error = err;
+            done();
+          });
+          onStub.args[1][1](0);
+        });
+
+        it('should spawn the process with correct parameters', () => {
+          expect(crossSpawnStub.args[0][0]).to.equal('npm');
+          expect(crossSpawnStub.args[0][1]).to.deep.equal(scenario.output);
+          expect(crossSpawnStub.args[0][2]).to.deep.equal(scenario.cmdCall);
+        });
+
+        it('should return no error', () => {
+          expect(error).to.be.null;
+        });
+
+        it('should correctly setup on error and on close listeners', () => {
+          expect(onStub.args[0][0]).to.equal('error');
+          expect(onStub.args[1][0]).to.equal('close');
+        });
+      });
+    });
+  });
 
   describe('installDependency()', () => {
     const scenarios = [
@@ -25,9 +73,12 @@ describe('utils : npm-utils', () => {
         },
         output: [
           'install',
+          '--prefix',
+          'path/to/component',
           '--save-exact',
           '--save-dev',
-          'oc-template-jade-compiler'
+          'oc-template-jade-compiler',
+          '--no-package-lock'
         ]
       },
       {
@@ -37,7 +88,13 @@ describe('utils : npm-utils', () => {
           isDev: true,
           save: false
         },
-        output: ['install', 'lodash']
+        output: [
+          'install',
+          '--prefix',
+          'path/to/component',
+          'lodash',
+          '--no-package-lock'
+        ]
       },
       {
         input: {
@@ -46,11 +103,25 @@ describe('utils : npm-utils', () => {
           isDev: false,
           save: true
         },
-        output: ['install', '--save-exact', '--save', 'underscore']
+        output: [
+          'install',
+          '--prefix',
+          'path/to/component',
+          '--save-exact',
+          '--save',
+          'underscore',
+          '--no-package-lock'
+        ]
       },
       {
         input: { dependency: 'oc-client@~1.2.3', installPath, save: false },
-        output: ['install', 'oc-client@~1.2.3']
+        output: [
+          'install',
+          '--prefix',
+          'path/to/component',
+          'oc-client@~1.2.3',
+          '--no-package-lock'
+        ]
       }
     ];
 
@@ -73,6 +144,10 @@ describe('utils : npm-utils', () => {
         it('should spawn the process with correct parameters', () => {
           expect(crossSpawnStub.args[0][0]).to.equal('npm');
           expect(crossSpawnStub.args[0][1]).to.deep.equal(scenario.output);
+          expect(crossSpawnStub.args[0][2]).to.deep.equal({
+            cwd: installPath,
+            stdio: 'inherit'
+          });
         });
 
         it('should return no error', () => {
@@ -104,10 +179,13 @@ describe('utils : npm-utils', () => {
         },
         output: [
           'install',
+          '--prefix',
+          'path/to/component',
           '--save-exact',
           '--save-dev',
           'oc-template-jade-compiler',
-          'lodash'
+          'lodash',
+          '--no-package-lock'
         ]
       },
       {
@@ -117,7 +195,14 @@ describe('utils : npm-utils', () => {
           isDev: true,
           save: false
         },
-        output: ['install', 'moment', 'lodash']
+        output: [
+          'install',
+          '--prefix',
+          'path/to/component',
+          'moment',
+          'lodash',
+          '--no-package-lock'
+        ]
       },
       {
         input: {
@@ -126,7 +211,16 @@ describe('utils : npm-utils', () => {
           isDev: false,
           save: true
         },
-        output: ['install', '--save-exact', '--save', 'underscore', 'oc-client']
+        output: [
+          'install',
+          '--prefix',
+          'path/to/component',
+          '--save-exact',
+          '--save',
+          'underscore',
+          'oc-client',
+          '--no-package-lock'
+        ]
       },
       {
         input: {
@@ -134,7 +228,14 @@ describe('utils : npm-utils', () => {
           installPath,
           save: false
         },
-        output: ['install', 'oc-client@~1.2.3', 'oc-template-react-compiler']
+        output: [
+          'install',
+          '--prefix',
+          'path/to/component',
+          'oc-client@~1.2.3',
+          'oc-template-react-compiler',
+          '--no-package-lock'
+        ]
       }
     ];
 
@@ -159,6 +260,10 @@ describe('utils : npm-utils', () => {
         it('should spawn the process with correct parameters', () => {
           expect(crossSpawnStub.args[0][0]).to.equal('npm');
           expect(crossSpawnStub.args[0][1]).to.deep.equal(scenario.output);
+          expect(crossSpawnStub.args[0][2]).to.deep.equal({
+            cwd: installPath,
+            stdio: 'inherit'
+          });
         });
 
         it('should return no error', () => {

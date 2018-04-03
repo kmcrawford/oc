@@ -1,6 +1,7 @@
 'use strict';
 
 const async = require('async');
+const parseAuthor = require('parse-author');
 const _ = require('lodash');
 
 const dateStringified = require('../../utils/date-stringify');
@@ -8,6 +9,15 @@ const getComponentsHistory = require('./helpers/get-components-history');
 const getAvailableDependencies = require('./helpers/get-available-dependencies');
 const packageInfo = require('../../../package.json');
 const urlBuilder = require('../domain/url-builder');
+
+function getParsedAuthor(author = {}) {
+  return _.isString(author) ? parseAuthor(author) : author;
+}
+
+function mapComponentDetails(component) {
+  component.author = getParsedAuthor(component.author);
+  return component;
+}
 
 module.exports = function(repository) {
   return function(req, res, next) {
@@ -18,7 +28,7 @@ module.exports = function(repository) {
       }
 
       const isHtmlRequest =
-        !!req.headers.accept && req.headers.accept.indexOf('text/html') >= 0,
+          !!req.headers.accept && req.headers.accept.indexOf('text/html') >= 0,
         baseResponse = {
           href: res.conf.baseUrl,
           ocVersion: packageInfo.version,
@@ -44,7 +54,7 @@ module.exports = function(repository) {
                 );
               }
 
-              componentsInfo.push(result);
+              componentsInfo.push(mapComponentDetails(result));
               componentsReleases += result.allVersions.length;
               callback();
             }),
@@ -66,9 +76,10 @@ module.exports = function(repository) {
                   components: componentsInfo,
                   componentsReleases,
                   componentsList: _.map(componentsInfo, component => {
-                    const state = !!component.oc && !!component.oc.state
-                      ? component.oc.state
-                      : '';
+                    const state =
+                      !!component.oc && !!component.oc.state
+                        ? component.oc.state
+                        : '';
 
                     if (state) {
                       stateCounts[state] = stateCounts[state] || 0;
@@ -77,6 +88,7 @@ module.exports = function(repository) {
 
                     return {
                       name: component.name,
+                      author: component.author,
                       state: state
                     };
                   }),

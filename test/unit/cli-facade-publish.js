@@ -17,8 +17,8 @@ describe('cli : facade : publish', () => {
       read: readStub
     }),
     publishFacade = new PublishFacade({
-      registry: registry,
-      local: local,
+      registry,
+      local,
       logger: logSpy
     });
 
@@ -157,8 +157,8 @@ describe('cli : facade : publish', () => {
                 execute(() => {
                   registry.putComponent.restore();
 
-                  expect(logSpy.ok.args[1][0]).to.include('http://www.api.com');
-                  expect(logSpy.ok.args[2][0]).to.include(
+                  expect(logSpy.ok.args[0][0]).to.include('http://www.api.com');
+                  expect(logSpy.ok.args[1][0]).to.include(
                     'http://www.api2.com'
                   );
                   done();
@@ -178,6 +178,25 @@ describe('cli : facade : publish', () => {
                 it('should show an error', () => {
                   expect(logSpy.err.args[0][0]).to.include(
                     'An error happened when publishing the component: nope!'
+                  );
+                });
+              });
+
+              describe('when a generic error happens from the api', () => {
+                beforeEach(done => {
+                  sinon
+                    .stub(registry, 'putComponent')
+                    .yields({ IgotAnError: true });
+                  execute(done);
+                });
+
+                afterEach(() => {
+                  registry.putComponent.restore();
+                });
+
+                it('should show an error', () => {
+                  expect(logSpy.err.args[0][0]).to.include(
+                    'An error happened when publishing the component: {"IgotAnError":true}'
                   );
                 });
               });
@@ -270,7 +289,7 @@ describe('cli : facade : publish', () => {
                 });
 
                 it('should not prompt for credentials', () => {
-                  expect(logSpy.ok.args[1][0]).to.equal(
+                  expect(logSpy.ok.args[0][0]).to.equal(
                     'Using specified credentials'
                   );
                 });
@@ -290,8 +309,8 @@ describe('cli : facade : publish', () => {
                 });
 
                 it('should show a message', () => {
-                  expect(logSpy.ok.args[1][0]).to.include('Published -> ');
-                  expect(logSpy.ok.args[1][0]).to.include(
+                  expect(logSpy.ok.args[0][0]).to.include('Published -> ');
+                  expect(logSpy.ok.args[0][0]).to.include(
                     'http://www.api.com/hello-world/1.0.0'
                   );
                 });

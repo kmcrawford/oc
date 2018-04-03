@@ -1,6 +1,25 @@
 'use strict';
 const colors = require('colors/safe');
 
+const validFunctionMock = `// simplified mock signature
+module.exports = (a, b) => a+b;`;
+
+const validMockObject = `// standard plugin-like signature
+
+const dbClient = require('my-db-client');
+let cache;
+
+module.exports.register = (options, dependencies, next) => {
+  let client = dbClient(options);
+  client.init((err, response) => {
+    cache = response;
+    next(err);
+  });
+};
+
+module.exports.execute = key => cache[key];
+`;
+
 module.exports = {
   commands: {
     cli: {
@@ -56,8 +75,8 @@ module.exports = {
         'Registry configuration is not valid: routes must be an array',
       CONFIGURATION_ROUTES_ROUTE_CONTAINS_PREFIX:
         'Registry configuration is not valid: route url can\'t contain "{0}"',
-      CONFIGURATION_S3_NOT_VALID:
-        'Registry configuration is not valid: S3 configuration is not valid',
+      CONFIGURATION_STORAGE_NOT_VALID:
+        'Registry configuration is not valid: {0} configuration is not valid',
       CONFIGURATION_HEADERS_TO_SKIP_MUST_BE_STRING_ARRAY:
         'Registry configuration is not valid: customHeadersToSkipOnWeakVersion must be an array of strings',
       DATA_OBJECT_IS_UNDEFINED: 'data object is undefined',
@@ -91,17 +110,26 @@ module.exports = {
     },
     cli: {
       scaffoldError: (url, error) =>
-        `Scaffolding failed. Please open an issue on ${url} with the following information: ${error}`,
+        `Scaffolding failed. Please open an issue on ${
+          url
+        } with the following information: ${error}`,
       COMPONENT_HREF_NOT_FOUND:
         "The specified path is not a valid component's url",
       COMPONENTS_NOT_FOUND: 'no components found in specified path',
+      DEPENDENCIES_INSTALL_FAIL:
+        'An error happened when installing the dependencies',
       FOLDER_IS_NOT_A_FOLDER: '"{0}" must be a directory',
       FOLDER_NOT_FOUND: '"{0}" not found',
       DEV_FAIL: 'An error happened when initialising the dev runner: {0}',
       INIT_FAIL: 'An error happened when initialising the component: {0}',
       INVALID_CREDENTIALS: 'Invalid credentials',
-      MOCK_PLUGIN_IS_NOT_A_FUNCTION:
-        'Looks like you are trying to register a dynamic mock plugin but the file you specified is not a function',
+      MOCK_PLUGIN_IS_NOT_VALID: `Looks like you are trying to register a dynamic mock plugin but the file you specified is not a valid mock.
+The entry point should be a synchronous function or an object containing an asynchronous register() function and a synchronous execute() function.
+Example:
+
+${colors.yellow(validFunctionMock)}
+
+${colors.yellow(validMockObject)}`,
       NAME_NOT_VALID:
         'the name is not valid. Allowed characters are alphanumeric, _, -',
       NODE_CLI_VERSION_NEEDS_UPGRADE:
@@ -121,13 +149,14 @@ module.exports = {
         'oc registries not found. Run "oc registry add <registry href>"',
       SERVERJS_DEPENDENCY_NOT_DECLARED:
         'Missing dependencies from package.json => {0}',
-      TEMPLATE_NOT_FOUND: 'file {0} not found',
-      TEMPLATE_TYPE_NOT_VALID: 'the template is not valid',
+      TEMPLATE_NOT_FOUND: 'Error requiring oc-template: "{0}" not found',
+      TEMPLATE_TYPE_NOT_VALID:
+        'Error requiring oc-template: "{0}" is not a valid oc-template',
       TEMPLATE_DEP_MISSING:
         'Template dependency missing. To fix it run:\n\nnpm install --save-dev {0}-compiler --prefix {1}\n\n'
     },
     generic: 'An error occurred: {0}',
-    s3: {
+    STORAGE: {
       DIR_NOT_FOUND: 'Directory "{0}" not found',
       DIR_NOT_FOUND_CODE: 'dir_not_found',
       FILE_NOT_FOUND: 'File "{0}" not found',
@@ -161,7 +190,9 @@ Happy coding
       installCompilerSuccess: (template, compiler, version) =>
         `${colors.green('✔')} Installed ${compiler} [${template} v${version}]`,
       legacyTemplateDeprecationWarning: (legacyType, newType) =>
-        `Template-type "${legacyType}" has been deprecated and is now replaced by "${newType}"`,
+        `Template-type "${
+          legacyType
+        }" has been deprecated and is now replaced by "${newType}"`,
       CHANGES_DETECTED: 'Changes detected on file: {0}',
       CHECKING_DEPENDENCIES: 'Ensuring dependencies are loaded...',
       COMPONENT_INITED: 'Success! Created "{0}"',
@@ -174,7 +205,7 @@ Happy coding
       HOT_RELOADING_DISABLED:
         'OC dev is running with hot reloading disabled so changes will be ignored',
       INSTALLING_DEPS:
-        "Trying to install missing modules: {0}\nIf you aren't connected to the internet, or npm isn't configured then this step will fail",
+        "Trying to install missing modules: {0}\nIf you aren't connected to the internet, or npm isn't configured then this step will fail...",
       MOCKED_PLUGIN: 'Mock for plugin has been registered: {0} () => {1}',
       NO_SUCH_COMMAND: "No such command '{0}'",
       NOT_VALID_REGISTRY_COMMAND:

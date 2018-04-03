@@ -6,6 +6,7 @@ const injectr = require('injectr');
 const path = require('path');
 const sinon = require('sinon');
 const _ = require('lodash');
+const resources = require('../../src/resources');
 
 describe('registry : domain : repository', () => {
   let response;
@@ -38,13 +39,11 @@ describe('registry : domain : repository', () => {
     const s3Mock = {
       getJson: sinon.stub(),
       putDir: sinon.stub(),
-      putFileContent: sinon.stub()
+      putFileContent: sinon.stub(),
+      adapterType: 's3'
     };
 
     const Repository = injectr('../../src/registry/domain/repository.js', {
-      './s3': function() {
-        return s3Mock;
-      },
       'fs-extra': fsMock,
       './components-cache': () => componentsCacheMock,
       './components-details': () => componentsDetailsMock
@@ -59,13 +58,18 @@ describe('registry : domain : repository', () => {
       },
       baseUrl: 'http://saymyname.com:3000/v2/',
       env: { name: 'prod' },
-      s3: {
-        key: 'a-key',
-        secret: 'secrety-key',
-        bucket: 'walter-test',
-        region: 'us-west-2',
-        componentsDir: 'components',
-        path: '//s3.amazonaws.com/walter-test/'
+      storage: {
+        adapter: function() {
+          return s3Mock;
+        },
+        options: {
+          key: 'a-key',
+          secret: 'secrety-key',
+          bucket: 'walter-test',
+          region: 'us-west-2',
+          componentsDir: 'components',
+          path: 'https://s3.amazonaws.com/walter-test/'
+        }
       }
     };
 
@@ -178,7 +182,31 @@ describe('registry : domain : repository', () => {
           );
         });
       });
-
+      describe('when the get component info fails', () => {
+        before(done => {
+          componentsCacheMock.get.yields(null, componentsCacheBaseResponse);
+          sinon
+            .stub(repository, 'getComponentInfo')
+            .callsFake((name, version, callback) => {
+              callback({
+                msg: resources.errors.STORAGE.FILE_NOT_VALID,
+                code: resources.errors.STORAGE.FILE_NOT_VALID_CODE
+              });
+            });
+          repository.getComponent('hello-world', '1.0.0', saveResult(done));
+        });
+        after(() => {
+          repository.getComponentInfo.restore();
+        });
+        it('should respond with a proper error', () => {
+          expect(response.error).not.to.be.empty;
+          expect(response.error).to.equal(
+            `component not available: ${
+              resources.errors.STORAGE.FILE_NOT_VALID
+            }`
+          );
+        });
+      });
       describe('when the component exists but version does not', () => {
         before(done => {
           componentsCacheMock.get.yields(null, componentsCacheBaseResponse);

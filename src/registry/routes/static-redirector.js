@@ -4,13 +4,13 @@ const format = require('stringformat');
 const fs = require('fs-extra');
 const path = require('path');
 
-const getFileInfo = require('../../utils/get-file-info');
+const getFileInfo = require('oc-storage-adapters-utils').getFileInfo;
 
 module.exports = function(repository) {
   return function(req, res) {
     let filePath;
     const clientPath =
-      (res.conf.prefix ? res.conf.prefix : '/') + 'oc-client/client.js',
+        (res.conf.prefix ? res.conf.prefix : '/') + 'oc-client/client.js',
       clientMapPath =
         (res.conf.prefix ? res.conf.prefix : '/') +
         'oc-client/oc-client.min.map';
