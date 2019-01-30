@@ -1,7 +1,7 @@
 {
   "name": "oc-client",
   "description": "The OpenComponents client-side javascript client",
-  "version": "0.42.26",
+  "version": "0.45.2",
   "repository": "https://github.com/opencomponents/oc/tree/master/components/oc-client",
   "author": "Matteo Figus <matteofigus@gmail.com>",
   "oc": {
@@ -12,12 +12,15 @@
     "files": {
       "data": "server.js",
       "template": {
-        "src": "template.jade",
-        "type": "jade"
+        "src": "template.js",
+        "type": "oc-template-es6"
       },
       "static": [
         "src"
       ]
     }
+  },
+  "devDependencies": {
+    "oc-template-es6-compiler": "^1.0.1"
   }
 }

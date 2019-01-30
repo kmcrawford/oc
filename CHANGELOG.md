@@ -1,5 +1,156 @@
 ## Change Log
 
+### v0.45.2
+- [#983](https://github.com/opencomponents/oc/pull/983) Update oc-template-handlebars-compiler in package.json from 6.2.4 to 6.2.6
+- [#985](https://github.com/opencomponents/oc/pull/985) Update oc-template-jade-compiler in package.json from 6.2.4 to 6.2.6
+- [#984](https://github.com/opencomponents/oc/pull/984) Update oc-template-es6-compiler in package.json from 1.1.3 to 1.1.5
+- [#979](https://github.com/opencomponents/oc/pull/979) Update oc-template-jade in package.json from 6.0.12 to 6.0.13
+- [#975](https://github.com/opencomponents/oc/pull/975) Update dependency-graph in package.json from 0.7.2 to 0.8.0
+- [#978](https://github.com/opencomponents/oc/pull/978) Update husky in package.json from 1.2.1 to 1.3.0
+- [#976](https://github.com/opencomponents/oc/pull/976) Update sinon in package.json from 7.1.1 to 7.2.2
+- [#977](https://github.com/opencomponents/oc/pull/977) Update husky in package.json from 1.2.0 to 1.2.1
+- [#973](https://github.com/opencomponents/oc/pull/973) Update colors in package.json from 1.3.2 to 1.3.3
+
+### v0.45.1
+- [#971](https://github.com/opencomponents/oc/pull/971) oc package now is able to reuse modules in component path
+- [#951](https://github.com/opencomponents/oc/pull/951) Update form-data in package.json from 2.3.2 to 2.3.3
+- [#970](https://github.com/opencomponents/oc/pull/970) Update lint-staged in package.json from 8.0.5 to 8.1.0
+- [#969](https://github.com/opencomponents/oc/pull/969) Update husky in package.json from 1.1.2 to 1.2.0
+- [#968](https://github.com/opencomponents/oc/pull/968) Update yargs in package.json from 12.0.2 to 12.0.5
+- [#966](https://github.com/opencomponents/oc/pull/966) Update lint-staged in package.json from 8.0.4 to 8.0.5
+- [#958](https://github.com/opencomponents/oc/pull/958) Update fs-extra in package.json from 7.0.0 to 7.0.1
+- [#963](https://github.com/opencomponents/oc/pull/963) Update node dependency to >= 8
+- [#960](https://github.com/opencomponents/oc/pull/960) Added editorconfig file
+- [#956](https://github.com/opencomponents/oc/pull/956) Update sinon in package.json from 7.1.0 to 7.1.1
+- [#955](https://github.com/opencomponents/oc/pull/955) Update lint-staged in package.json from 8.0.0 to 8.0.4
+- [#953](https://github.com/opencomponents/oc/pull/953) Update lint-staged in package.json from ^7.0.0 to 8.0.0
+- [#946](https://github.com/opencomponents/oc/pull/946) Update serialize-error in package.json from ^2.1.0 to 3.0.0
+- [#952](https://github.com/opencomponents/oc/pull/952) Update sinon in package.json from 6.3.5 to 7.1.0
+- [#949](https://github.com/opencomponents/oc/pull/949) Update semver in package.json from 5.5.1 to 5.6.0
+- [#948](https://github.com/opencomponents/oc/pull/948) Update husky in package.json from 1.1.1 to 1.1.2
+- [#947](https://github.com/opencomponents/oc/pull/947) Update express in package.json from 4.16.3 to 4.16.4
+
+### v0.45.0
+- [#941](https://github.com/opencomponents/oc/pull/941) [Suggestion] Handling relative path when initiating component
+- [#944](https://github.com/opencomponents/oc/pull/944) Update sinon in package.json from 6.3.4 to 6.3.5
+- [#945](https://github.com/opencomponents/oc/pull/945) Update husky in package.json from 1.0.1 to 1.1.1
+- [#940](https://github.com/opencomponents/oc/pull/940) Update husky in package.json from ^0.14.3 to 1.0.1
+- [#936](https://github.com/opencomponents/oc/pull/936) Update sinon in package.json from 6.1.5 to 6.3.4
+- [#939](https://github.com/opencomponents/oc/pull/939) Update chai in package.json from 4.1.2 to 4.2.0
+
+### v0.44.13
+- [#933](https://github.com/opencomponents/oc/pull/933) Update morgan in package.json from 1.9.0 to 1.9.1
+- [#926](https://github.com/opencomponents/oc/pull/926) Update dependency-graph in package.json from 0.7.1 to 0.7.2
+- [#937](https://github.com/opencomponents/oc/pull/937) Update opn in package.json from 5.3.0 to 5.4.0
+- [#924](https://github.com/opencomponents/oc/pull/924) Update semver in package.json from 5.5.0 to 5.5.1
+- [#925](https://github.com/opencomponents/oc/pull/925) Update colors in package.json from 1.3.1 to 1.3.2
+- [#930](https://github.com/opencomponents/oc/pull/930) Update oc-s3-storage-adapter in package.json from 1.1.3 to 1.1.4
+- [#932](https://github.com/opencomponents/oc/pull/932) Update yargs in package.json from 12.0.1 to 12.0.2
+- [#931](https://github.com/opencomponents/oc/pull/931) expose express app to registry
+- [#923](https://github.com/opencomponents/oc/pull/923) Update sinon in package.json from 6.1.4 to 6.1.5
+- [#920](https://github.com/opencomponents/oc/pull/920) Update colors in package.json from 1.3.0 to 1.3.1
+- [#919](https://github.com/opencomponents/oc/pull/919) Update sinon in package.json from 6.1.3 to 6.1.4
+- [#917](https://github.com/opencomponents/oc/pull/917) Update fs-extra in package.json from 6.0.1 to 7.0.0
+- [#916](https://github.com/opencomponents/oc/pull/916) Update oc-s3-storage-adapter in package.json from 1.1.2 to 1.1.3
+
+### v0.44.12
+- [#915](https://github.com/opencomponents/oc/pull/915) Update oc-storage-adapters-utils in package.json from 1.0.2 to 1.0.3
+- [#914](https://github.com/opencomponents/oc/pull/914) Update sinon in package.json from 6.1.0 to 6.1.3
+- [#910](https://github.com/opencomponents/oc/pull/910) Update yargs in package.json from ^11.0.0 to 12.0.1
+- [#912](https://github.com/opencomponents/oc/pull/912) Update sinon in package.json from 6.0.1 to 6.1.0
+- [#909](https://github.com/opencomponents/oc/pull/909) fix for issue 907
+- [#908](https://github.com/opencomponents/oc/pull/908) Update sinon in package.json from 6.0.0 to 6.0.1
+- [#905](https://github.com/opencomponents/oc/pull/905) Update sinon in package.json from ^5.0.10 to 6.0.0
+
+### v0.44.11
+- [#904](https://github.com/opencomponents/oc/pull/904) Upgrade deps
+
+### v0.44.10
+- [#902](https://github.com/opencomponents/oc/pull/902) Update oc-client in package.json from 3.2.0 to 3.2.1
+- [#895](https://github.com/opencomponents/oc/pull/895) Update chai in package.json from 3.5.0 to 4.1.2
+- [#903](https://github.com/opencomponents/oc/pull/903) Update oc-client-browser in package.json from 1.3.2 to 1.3.3
+- [#899](https://github.com/opencomponents/oc/pull/899) Fix oc-cli breaking on Windows when modifying files
+- [#901](https://github.com/opencomponents/oc/pull/901) Update dependency-graph in package.json from 0.7.0 to 0.7.1
+- [#900](https://github.com/opencomponents/oc/pull/900) Update oc-client in package.json from 3.1.0 to 3.2.0
+
+### v0.44.9
+- [#897](https://github.com/opencomponents/oc/pull/897) [DX-515] Async waterfall was calling the wrong callback
+
+### v0.44.8
+- [#896](https://github.com/opencomponents/oc/pull/896) Update compilers
+- [#891](https://github.com/opencomponents/oc/pull/891) Update oc-client-browser in package.json from 1.3.1 to 1.3.2
+- [#890](https://github.com/opencomponents/oc/pull/890) Update fs-extra in package.json from 6.0.0 to 6.0.1
+- [#889](https://github.com/opencomponents/oc/pull/889) Update express in package.json from 4.16.2 to 4.16.3
+- [#888](https://github.com/opencomponents/oc/pull/888) Switch from Greenkeeper to dependencies.io
+
+### v0.44.7
+- [#885](https://github.com/opencomponents/oc/pull/885) Add .idea/ in files patterns to ignore
+
+### v0.44.6
+- [#886](https://github.com/opencomponents/oc/pull/886) Lock broken version of es6-compiler
+
+### v0.44.5
+- [#881](https://github.com/opencomponents/oc/pull/881) chore(package): update sinon to version 5.0.10
+- [#884](https://github.com/opencomponents/oc/pull/884) ensuring trailing slash to the registry url before removing
+- [#882](https://github.com/opencomponents/oc/pull/882) Update builtin-modules to the latest version 🚀
+- [#878](https://github.com/opencomponents/oc/pull/878) Update colors to the latest version 🚀
+- [#876](https://github.com/opencomponents/oc/pull/876) Upgrade lodash
+- [#877](https://github.com/opencomponents/oc/pull/877) UI bugfix
+
+### v0.44.4
+- [#875](https://github.com/opencomponents/oc/pull/875) [DX-502] Add templates info into OC UI
+- [#874](https://github.com/opencomponents/oc/pull/874) Update body-parser to the latest version 🚀
+
+### v0.44.3
+- [#872](https://github.com/opencomponents/oc/pull/872) [DX-497] OC Clean
+- [#871](https://github.com/opencomponents/oc/pull/871) [DX-467] Legacy cleanup Part I
+- [#869](https://github.com/opencomponents/oc/pull/869) [DX-496] Fix port allocation for liveReload
+- [#870](https://github.com/opencomponents/oc/pull/870) Update fs-extra to the latest version 🚀
+
+### v0.44.2
+- [#868](https://github.com/opencomponents/oc/pull/868) Live reload to work in dev only when hotReloading flag is on
+- [#867](https://github.com/opencomponents/oc/pull/867) Fix git script
+
+### v0.44.1
+- [#864](https://github.com/opencomponents/oc/pull/864) [DX-467] Remove Pug dependency from the UI
+- [#865](https://github.com/opencomponents/oc/pull/865) Integrate CI to modern node versions
+- [#866](https://github.com/opencomponents/oc/pull/866) Update colors to the latest version 🚀
+
+### v0.44.0
+- [#862](https://github.com/opencomponents/oc/pull/862) [DX-467] Add ES6 template as default core template
+- [#863](https://github.com/opencomponents/oc/pull/863) Update oc-client to the latest version 🚀
+
+### v0.43.2
+- [#861](https://github.com/opencomponents/oc/pull/861) Housekeeping
+
+### v0.43.0
+- [#852](https://github.com/opencomponents/oc/pull/852) [DX-412] Empty response setter on context
+- [#860](https://github.com/opencomponents/oc/pull/860) Housekeeping
+- [#859](https://github.com/opencomponents/oc/pull/859) Update oc-client to the latest version 🚀
+- [#858](https://github.com/opencomponents/oc/pull/858) Update oc-client-browser to the latest version 🚀
+- [#857](https://github.com/opencomponents/oc/pull/857) Update oc-template-jade-compiler to the latest version 🚀
+- [#856](https://github.com/opencomponents/oc/pull/856) Update oc-template-handlebars-compiler to the latest version 🚀
+- [#855](https://github.com/opencomponents/oc/pull/855) Update oc-template-jade to the latest version 🚀
+- [#853](https://github.com/opencomponents/oc/pull/853) Update oc-template-handlebars to the latest version 🚀
+- [#851](https://github.com/opencomponents/oc/pull/851) Update sinon to the latest version 🚀
+- [#849](https://github.com/opencomponents/oc/pull/849) Update pug to the latest version 🚀
+- [#848](https://github.com/opencomponents/oc/pull/848) Update accept-language-parser to the latest version 🚀
+- [#847](https://github.com/opencomponents/oc/pull/847) Update pug to the latest version 🚀
+- [#846](https://github.com/opencomponents/oc/pull/846) Update oc-client to the latest version 🚀
+- [#842](https://github.com/opencomponents/oc/pull/842) Update oc-template-handlebars to the latest version 🚀
+- [#843](https://github.com/opencomponents/oc/pull/843) Update oc-template-jade to the latest version 🚀
+- [#844](https://github.com/opencomponents/oc/pull/844) Update oc-template-handlebars-compiler to the latest version 🚀
+- [#845](https://github.com/opencomponents/oc/pull/845) Update oc-template-jade-compiler to the latest version 🚀
+- [#841](https://github.com/opencomponents/oc/pull/841) Add license scan report and status
+- [#840](https://github.com/opencomponents/oc/pull/840) Update opn to the latest version 🚀
+- [#839](https://github.com/opencomponents/oc/pull/839) Update colors to the latest version 🚀
+- [#838](https://github.com/opencomponents/oc/pull/838) Update colors to the latest version 🚀
+- [#837](https://github.com/opencomponents/oc/pull/837) Update pug to the latest version 🚀
+- [#835](https://github.com/opencomponents/oc/pull/835) Update pug to the latest version 🚀
+- [#834](https://github.com/opencomponents/oc/pull/834) Update livereload to the latest version 🚀
+- [#832](https://github.com/opencomponents/oc/pull/832) Update lint-staged to the latest version 🚀
+- [#830](https://github.com/opencomponents/oc/pull/830) Update form-data to the latest version 🚀
+
 ### v0.42.26
 - [#829](https://github.com/opencomponents/oc/pull/829) Added author to components list view and author filter
 

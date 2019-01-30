@@ -1,5 +1,7 @@
 'use strict';
-const colors = require('colors/safe');
+const { green, yellow } = require('colors/safe');
+
+// Kind of long multi-string messages and functions
 
 const validFunctionMock = `// simplified mock signature
 module.exports = (a, b) => a+b;`;
@@ -19,6 +21,37 @@ module.exports.register = (options, dependencies, next) => {
 
 module.exports.execute = key => cache[key];
 `;
+
+const mockPluginIsNotValid = `Looks like you are trying to register a dynamic mock plugin but the file you specified is not a valid mock.
+The entry point should be a synchronous function or an object containing an asynchronous register() function and a synchronous execute() function.
+Example:
+
+${yellow(validFunctionMock)}
+
+${yellow(validMockObject)}`;
+
+const initSuccess = (componentName, componentPath) => {
+  const success = `Success! Created ${componentName} at ${componentPath}`;
+  return `${green(success)} 
+
+From here you can run several commands
+
+${green('oc --help')}
+To see a detailed list of all the commands available
+
+We suggest that you begin by typing:
+
+${green('oc dev . 3030')}
+
+If you have questions, issues or feedback about OpenComponents, please, join us on Gitter:
+${green('https://gitter.im/opentable/oc')}
+
+Happy coding
+
+`;
+};
+
+// Kind of concise string messages and functions
 
 module.exports = {
   commands: {
@@ -109,27 +142,24 @@ module.exports = {
       TEMPLATE_NOT_SUPPORTED: '{0} is not a supported oc-template'
     },
     cli: {
+      cleanRemoveError: err =>
+        `An error happened when removing the folders: ${err}`,
       scaffoldError: (url, error) =>
-        `Scaffolding failed. Please open an issue on ${
-          url
-        } with the following information: ${error}`,
+        `Scaffolding failed. Please open an issue on ${url} with the following information: ${error}`,
       COMPONENT_HREF_NOT_FOUND:
         "The specified path is not a valid component's url",
       COMPONENTS_NOT_FOUND: 'no components found in specified path',
       DEPENDENCIES_INSTALL_FAIL:
         'An error happened when installing the dependencies',
+      DEPENDENCY_LINK_FAIL:
+        'An error happened when linking the dependency {0} with error {1}',
+      DEPENDENCIES_LINK_FAIL: 'An error happened when linking the dependencies',
+      DEV_FAIL: 'An error happened when initialising the dev runner: {0}',
       FOLDER_IS_NOT_A_FOLDER: '"{0}" must be a directory',
       FOLDER_NOT_FOUND: '"{0}" not found',
-      DEV_FAIL: 'An error happened when initialising the dev runner: {0}',
       INIT_FAIL: 'An error happened when initialising the component: {0}',
       INVALID_CREDENTIALS: 'Invalid credentials',
-      MOCK_PLUGIN_IS_NOT_VALID: `Looks like you are trying to register a dynamic mock plugin but the file you specified is not a valid mock.
-The entry point should be a synchronous function or an object containing an asynchronous register() function and a synchronous execute() function.
-Example:
-
-${colors.yellow(validFunctionMock)}
-
-${colors.yellow(validMockObject)}`,
+      MOCK_PLUGIN_IS_NOT_VALID: mockPluginIsNotValid,
       NAME_NOT_VALID:
         'the name is not valid. Allowed characters are alphanumeric, _, -',
       NODE_CLI_VERSION_NEEDS_UPGRADE:
@@ -167,32 +197,18 @@ ${colors.yellow(validMockObject)}`,
   },
   messages: {
     cli: {
-      initSuccess: (componentName, componentPath) => `${colors.green(
-        'Success! Created ' + componentName + ' at ' + componentPath
-      )} 
-
-From here you can run several commands
-
-  ${colors.green('oc --help')}
-    To see a detailed list of all the commands available
-
-We suggest that you begin by typing:
-
-  ${colors.green('oc dev . 3030')}
-
-If you have questions, issues or feedback about OpenComponents, please, join us on Gitter:
-  ${colors.green('https://gitter.im/opentable/oc')}
-
-Happy coding
-
-`,
+      cleanAlreadyClean: `The folders are already clean`,
+      cleanList: list =>
+        `The following folders will be removed:\n${list.join('\n')}`,
+      cleanPrompt: 'Proceed? [Y/n]',
+      cleanPromptDefault: 'Y',
+      cleanSuccess: `Folders removed`,
+      initSuccess,
       installCompiler: compiler => `Installing ${compiler} from npm...`,
       installCompilerSuccess: (template, compiler, version) =>
-        `${colors.green('✔')} Installed ${compiler} [${template} v${version}]`,
+        `${green('✔')} Installed ${compiler} [${template} v${version}]`,
       legacyTemplateDeprecationWarning: (legacyType, newType) =>
-        `Template-type "${
-          legacyType
-        }" has been deprecated and is now replaced by "${newType}"`,
+        `Template-type "${legacyType}" has been deprecated and is now replaced by "${newType}"`,
       CHANGES_DETECTED: 'Changes detected on file: {0}',
       CHECKING_DEPENDENCIES: 'Ensuring dependencies are loaded...',
       COMPONENT_INITED: 'Success! Created "{0}"',
@@ -206,6 +222,8 @@ Happy coding
         'OC dev is running with hot reloading disabled so changes will be ignored',
       INSTALLING_DEPS:
         "Trying to install missing modules: {0}\nIf you aren't connected to the internet, or npm isn't configured then this step will fail...",
+      LINKING_DEPENDENCIES:
+        'Trying to link missing modules: {0}\nThe missing dependencies will be linked to component dependencies',
       MOCKED_PLUGIN: 'Mock for plugin has been registered: {0} () => {1}',
       NO_SUCH_COMMAND: "No such command '{0}'",
       NOT_VALID_REGISTRY_COMMAND:
@@ -222,6 +240,8 @@ Happy coding
       REGISTRY_LIST: 'oc linked registries:',
       REGISTRY_REMOVED: 'oc registry deleted',
       REGISTRY_STARTING: 'Starting dev registry on {0} ...',
+      REGISTRY_LIVERELOAD_STARTING:
+        'Starting live-reload server on port {0} ... (to disable use "--hotReloading=false")',
       RETRYING_10_SECONDS: 'Retrying in 10 seconds...',
       SCANNING_COMPONENTS: 'Looking for components...'
     }

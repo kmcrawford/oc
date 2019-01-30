@@ -3,6 +3,7 @@
 const async = require('async');
 const colors = require('colors/safe');
 const format = require('stringformat');
+const getPort = require('getport');
 const livereload = require('livereload');
 const path = require('path');
 const _ = require('lodash');
@@ -15,14 +16,14 @@ const watch = require('../domain/watch');
 const wrapCliCallback = require('../wrap-cli-callback');
 
 module.exports = function(dependencies) {
-  const local = dependencies.local,
-    logger = dependencies.logger;
+  const { local, logger } = dependencies;
+  const cliMessages = strings.messages.cli;
+  const cliErrors = strings.errors.cli;
 
   return function(opts, callback) {
     const componentsDir = opts.dirPath,
       port = opts.port || 3000,
-      baseUrl = opts.baseUrl || format('http://localhost:{0}/', port),
-      errors = strings.errors.cli,
+      baseUrl = opts.baseUrl || `http://localhost:${port}/`,
       fallbackRegistryUrl = opts.fallbackRegistryUrl,
       hotReloading = _.isUndefined(opts.hotReloading)
         ? true
@@ -32,20 +33,18 @@ module.exports = function(dependencies) {
 
     callback = wrapCliCallback(callback);
 
-    const watchForChanges = function({ components, liveReloadServer }, cb) {
+    const watchForChanges = function({ components, refreshLiveReload }, cb) {
       watch(components, componentsDir, (err, changedFile, componentDir) => {
         if (err) {
           logger.err(format(strings.errors.generic, err));
         } else {
-          logger.warn(
-            format(strings.messages.cli.CHANGES_DETECTED, changedFile)
-          );
+          logger.warn(format(cliMessages.CHANGES_DETECTED, changedFile));
           if (!hotReloading) {
-            logger.warn(strings.messages.cli.HOT_RELOADING_DISABLED);
+            logger.warn(cliMessages.HOT_RELOADING_DISABLED);
           } else if (!componentDir) {
-            cb(components, done => liveReloadServer.refresh('/'));
+            cb(components, refreshLiveReload);
           } else {
-            cb([componentDir], done => liveReloadServer.refresh('/'));
+            cb([componentDir], refreshLiveReload);
           }
         }
       });
@@ -58,7 +57,7 @@ module.exports = function(dependencies) {
 
       if (!packaging) {
         packaging = true;
-        logger.warn(strings.messages.cli.PACKAGING_COMPONENTS, true);
+        logger.warn(cliMessages.PACKAGING_COMPONENTS, true);
 
         async.eachSeries(
           componentsDirs,
@@ -67,13 +66,11 @@ module.exports = function(dependencies) {
               componentPath: dir,
               minify: false,
               verbose: opts.verbose,
-              production: opts['production']
+              production: opts.production
             };
 
             local.package(packageOptions, err => {
-              if (!err) {
-                i++;
-              }
+              if (!err) i++;
               cb(err);
             });
           },
@@ -85,12 +82,12 @@ module.exports = function(dependencies) {
                   : error;
               logger.err(
                 format(
-                  strings.errors.cli.PACKAGING_FAIL,
+                  cliErrors.PACKAGING_FAIL,
                   componentsDirs[i],
                   errorDescription
                 )
               );
-              logger.warn(strings.messages.cli.RETRYING_10_SECONDS);
+              logger.warn(cliMessages.RETRYING_10_SECONDS);
               setTimeout(() => {
                 packaging = false;
                 packageComponents(componentsDirs);
@@ -113,7 +110,7 @@ module.exports = function(dependencies) {
         if (data.errorCode === 'PLUGIN_MISSING_FROM_REGISTRY') {
           logger.err(
             format(
-              strings.errors.cli.PLUGIN_MISSING_FROM_REGISTRY,
+              cliErrors.PLUGIN_MISSING_FROM_REGISTRY,
               data.errorDetails,
               colors.blue(strings.commands.cli.MOCK_PLUGIN)
             )
@@ -122,18 +119,18 @@ module.exports = function(dependencies) {
       });
     };
 
-    logger.warn(strings.messages.cli.SCANNING_COMPONENTS, true);
+    logger.warn(cliMessages.SCANNING_COMPONENTS, true);
     local.getComponentsByDir(componentsDir, (err, components) => {
       if (_.isEmpty(components)) {
-        err = format(errors.DEV_FAIL, errors.COMPONENTS_NOT_FOUND);
+        err = format(cliErrors.DEV_FAIL, cliErrors.COMPONENTS_NOT_FOUND);
         callback(err);
         return logger.err(err);
       }
 
       logger.ok('OK');
-      _.forEach(components, component => {
-        logger.log(colors.green('├── ') + component);
-      });
+      _.forEach(components, component =>
+        logger.log(colors.green('├── ') + component)
+      );
 
       handleDependencies({ components, logger }, (err, dependencies) => {
         if (err) {
@@ -141,44 +138,78 @@ module.exports = function(dependencies) {
           return callback(err);
         }
         packageComponents(components, () => {
-          const liveReloadServer = livereload.createServer({ port: port + 1 });
-
-          const registry = new oc.Registry({
-            baseUrl,
-            prefix: opts.prefix || '',
-            dependencies: dependencies.modules,
-            discovery: true,
-            env: { name: 'local' },
-            fallbackRegistryUrl,
-            hotReloading,
-            local: true,
-            path: path.resolve(componentsDir),
-            port,
-            templates: dependencies.templates,
-            verbosity: 1
-          });
-
-          registerPlugins(registry);
-
-          logger.warn(format(strings.messages.cli.REGISTRY_STARTING, baseUrl));
-          registry.start(err => {
-            if (err) {
-              if (err.code === 'EADDRINUSE') {
-                err = format(strings.errors.cli.PORT_IS_BUSY, port);
+          async.waterfall(
+            [
+              next => {
+                if (hotReloading) {
+                  getPort(port + 1, (error, otherPort) => {
+                    if (error) {
+                      return next(error);
+                    }
+                    const liveReloadServer = livereload.createServer({
+                      port: otherPort
+                    });
+                    const refresher = () => liveReloadServer.refresh('/');
+                    next(null, { refresher, port: otherPort });
+                  });
+                } else {
+                  next(null, { refresher: _.noop, port: null });
+                }
+              }
+            ],
+            (err, liveReload) => {
+              if (err) {
+                logger.err(err);
+                return callback(err);
               }
 
-              logger.err(err);
-              return callback(err);
-            }
+              const registry = new oc.Registry({
+                baseUrl,
+                prefix: opts.prefix || '',
+                dependencies: dependencies.modules,
+                discovery: true,
+                env: { name: 'local' },
+                fallbackRegistryUrl,
+                hotReloading,
+                liveReloadPort: liveReload.port,
+                local: true,
+                path: path.resolve(componentsDir),
+                port,
+                templates: dependencies.templates,
+                verbosity: 1
+              });
 
-            if (optWatch) {
-              watchForChanges(
-                { components, liveReloadServer },
-                packageComponents
-              );
+              registerPlugins(registry);
+
+              logger.warn(format(cliMessages.REGISTRY_STARTING, baseUrl));
+              if (liveReload.port) {
+                logger.warn(
+                  format(
+                    cliMessages.REGISTRY_LIVERELOAD_STARTING,
+                    liveReload.port
+                  )
+                );
+              }
+              registry.start(err => {
+                if (err) {
+                  if (err.code === 'EADDRINUSE') {
+                    err = format(cliErrors.PORT_IS_BUSY, port);
+                  }
+
+                  logger.err(err);
+                  return callback(err);
+                }
+
+                if (optWatch) {
+                  watchForChanges(
+                    { components, refreshLiveReload: liveReload.refresher },
+                    packageComponents
+                  );
+                }
+                callback(null, registry);
+              });
             }
-            callback(null, registry);
-          });
+          );
         });
       });
     });

@@ -4,7 +4,7 @@ const format = require('stringformat');
 const path = require('path');
 
 const cleanRequire = require('../../../utils/clean-require');
-const isTemplateLegacy = require('./is-template-legacy');
+const isTemplateLegacy = require('../../../utils/is-template-legacy');
 const isTemplateValid = require('../../../utils/is-template-valid');
 const strings = require('../../../resources');
 
@@ -28,14 +28,11 @@ module.exports = function(template, options) {
     template
   );
 
-  [
-    componentRelativePath,
-    template,
-    localTemplate,
-    relativeTemplate
-  ].forEach(pathToTry => {
-    ocTemplate = ocTemplate || cleanRequire(pathToTry, { justTry: true });
-  });
+  [componentRelativePath, template, localTemplate, relativeTemplate].forEach(
+    pathToTry => {
+      ocTemplate = ocTemplate || cleanRequire(pathToTry, { justTry: true });
+    }
+  );
 
   if (!ocTemplate) {
     throw new Error(format(strings.errors.cli.TEMPLATE_NOT_FOUND, template));
